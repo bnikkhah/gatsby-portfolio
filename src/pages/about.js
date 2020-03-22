@@ -1,10 +1,40 @@
 import React from "react";
+import PropTypes from 'prop-types'
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import dogIllustration from "../images/dog-illustration.svg";
+// import dogIllustration from "../images/dog-illustration.svg";
 
-function AboutPage() {
+import { graphql, useStaticQuery } from 'gatsby'
+
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+import Img from 'gatsby-image'
+import Skills from '../components/skills'
+
+const AboutPage = () => {
+  const data = useStaticQuery(graphql`
+    query AboutQuery {
+      allContentfulAuthor {
+        edges {
+          node {
+            name
+            id
+            image {
+              id
+              sizes(quality: 100) {
+                ...GatsbyContentfulSizes_withWebp
+              }
+            }
+            bio {
+              json
+            }
+          }
+        }
+      }
+    }
+  `)
+
   return (
     <Layout>
       <SEO
@@ -12,27 +42,30 @@ function AboutPage() {
         title="About"
       />
 
-      <section className="flex flex-col items-center md:flex-row">
-        <div className="md:w-2/3 md:mr-8">
-          <blockquote className="pl-4 font-serif leading-loose text-justify border-l-4 border-gray-900">
-            The point is... to live one&apos;s life in the full complexity of
-            what one is, which is something much darker, more contradictory,
-            more of a maelstrom of impulses and passions, of cruelty, ecstacy,
-            and madness, than is apparent to the civilized being who glides on
-            the surface and fits smoothly into the world.
-          </blockquote>
-
-          <cite className="block mt-4 text-xs font-bold text-right uppercase">
-            – Thomas Nagel
-          </cite>
-        </div>
-
-        <figure className="w-2/3 md:w-1/3">
-          <img alt="A dog relaxing" src={dogIllustration} />
-        </figure>
+      <section>
+        {
+          data.allContentfulAuthor.edges.map((edge) => (
+            <div key={edge.node.id}>
+              <h1>About { edge.node.name }</h1>
+              <div className="transition-shadow duration-300 shadow-lg hover:shadow-xl p-6 about-card">
+                <div className="about-img">
+                  <Img sizes={edge.node.image.sizes} className="rounded-full w-48 shadow-md transform duration-300 transition-transform hover:-translate-y-1" />
+                </div>
+                <div className="about-description">
+                  { documentToReactComponents( edge.node.bio.json ) }
+                </div>
+              </div>
+              <Skills />
+            </div>
+          ))
+        }
       </section>
     </Layout>
   );
+}
+
+AboutPage.propTypes = {
+  data: PropTypes.object
 }
 
 export default AboutPage;

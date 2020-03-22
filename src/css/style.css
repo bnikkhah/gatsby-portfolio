@@ -3,3 +3,39 @@
 @tailwind components;
 /* purgecss end ignore */
 @tailwind utilities;
+
+h1 {
+    @apply text-4xl text-center uppercase;
+}
+
+h2 {
+    @apply text-3xl text-center uppercase;
+}
+
+h3 {
+    @apply font-bold text-xl mb-2;
+}
+
+a {
+    @apply font-semibold;
+}
+
+.btn {
+    @apply text-white font-bold py-3 px-4 w-full;
+}
+
+@screen md {
+
+    .btn {
+        @apply w-2/5
+    }
+}
+
+.btn-teal {
+    @apply bg-teal-700;
+}
+
+.btn.btn-teal:hover,
+.btn.btn-teal:focus {
+    @apply bg-blue-700;
+}

@@ -1,5 +1,7 @@
-import { graphql, useStaticQuery, Link } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import React, { useState } from "react";
+
+import AniLink from "gatsby-plugin-transition-link/AniLink"
 
 function Header() {
   const [isExpanded, toggleExpansion] = useState(false);
@@ -16,7 +18,14 @@ function Header() {
   return (
     <header className="bg-teal-700">
       <div className="flex flex-wrap items-center justify-between max-w-4xl mx-auto p-4 md:p-8">
-        <Link className="flex items-center no-underline text-white" to="/">
+        <AniLink
+          cover
+          direction="left"
+          className="flex items-center no-underline text-white"
+          to="/"
+          bg="#2C7A7B"
+          duration={0.7}
+        >
           <svg
             className="fill-current h-8 mr-2 w-8"
             height="54"
@@ -29,7 +38,7 @@ function Header() {
           <span className="font-bold text-xl tracking-tight">
             {site.siteMetadata.title}
           </span>
-        </Link>
+        </AniLink>
 
         <button
           className="block md:hidden border border-white flex items-center px-3 py-2 rounded text-white"
@@ -58,19 +67,20 @@ function Header() {
             {
               route: `/about`,
               title: `About`
-            },
-            {
-              route: `/contact`,
-              title: `Contact`
             }
           ].map(link => (
-            <Link
-              className="block md:inline-block mt-4 md:mt-0 md:ml-6 no-underline text-white"
+            <AniLink
+              cover
+              direction="right"
+              className="block md:inline-block mt-4 md:mt-0 md:ml-6 no-underline text-white hover:text-teal-200 uppercase tracking-wider font-light"
               key={link.title}
               to={link.route}
+              activeClassName='text-teal-300 hover:text-teal-300'
+              bg="#2C7A7B"
+              duration={0.7}
             >
               {link.title}
-            </Link>
+            </AniLink>
           ))}
         </nav>
       </div>

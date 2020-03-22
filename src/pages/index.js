@@ -1,10 +1,39 @@
 import React from "react";
 
+import { graphql, useStaticQuery } from 'gatsby'
+
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import catAndHumanIllustration from "../images/cat-and-human-illustration.svg";
+
+import AniLink from "gatsby-plugin-transition-link/AniLink"
+import ProjectCard from '../components/project-card'
 
 function IndexPage() {
+  const data = useStaticQuery(graphql`
+    query ProjectQuery {
+      allContentfulProject {
+        edges {
+          node {
+            id
+            title
+            link
+            slug
+            color
+            thumbnail {
+              id
+              sizes(quality: 100) {
+                ...GatsbyContentfulSizes_withWebp
+              }
+            }
+            description {
+              json
+            }
+          }
+        }
+      }
+    }  
+  `)
+  
   return (
     <Layout>
       <SEO
@@ -12,27 +41,28 @@ function IndexPage() {
         title="Home"
       />
 
-      <section className="text-center">
-        <img
-          alt="Cat and human sitting on a couch"
-          className="block mx-auto w-1/2"
-          src={catAndHumanIllustration}
-        />
-
-        <h2 className="bg-yellow-400 text-2xl font-bold inline-block my-8 p-3">
-          Hey there! Welcome to your first Gatsby site.
-        </h2>
-
-        <p className="leading-loose">
-          This is a barebones starter for Gatsby styled using{` `}
-          <a
-            className="font-bold no-underline text-gray-900"
-            href="https://tailwindcss.com/"
-          >
-            Tailwind
-          </a>
-          , a utility-first CSS framework.
-        </p>
+      <section className="flex flex-wrap">
+        <div className="w-full">
+          <h1>Projects</h1>
+        </div>
+        <div className="projects-list flex flex-wrap">
+          {
+            data.allContentfulProject.edges.map((edge, index) => (
+              <div className="sm:w-1/2 p-3" key={edge.node.id}>
+                <AniLink
+                  paintDrip
+                  direction="left"
+                  to={`/project/${edge.node.slug}`}
+                  hex={edge.node.color}
+                  duration={0.7}
+                  className="font-normal"
+                >
+                  <ProjectCard edge={edge} index={index} />
+                </AniLink>
+              </div>
+            ))
+          }
+        </div>
       </section>
     </Layout>
   );

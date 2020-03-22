@@ -1,0 +1,122 @@
+.social-item {
+
+    &:not(:last-of-type) {
+        margin-right: 0.5rem;
+    }
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    margin-bottom: 2rem;
+}
+
+h1,
+h3 {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+h3 {
+    position: relative;
+    margin-left: 1rem;
+    letter-spacing: 1px;
+
+    .dot {
+        position: absolute;
+        left: -1rem;
+        top: 10px;
+        background-color: #000000;
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.project-card {
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    h2 {
+        transition: letter-spacing .6s ease;
+    }
+
+    &:hover,
+    &:focus {
+
+        h2 {
+            letter-spacing: 2px;
+        }
+    }
+}
+
+.projects-list {
+    margin: -0.75rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.react-reveal {
+    height: 100%;
+}
+
+.about-card {
+    position: relative;
+    margin-top: 9rem;
+
+    .about-img {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -6rem;
+    }
+
+    .about-description {
+        margin-top: 6rem;
+    }
+}
+
+// canvas {
+//     position: fixed;
+//     top: 0;
+//     bottom: 0;
+//     right: 0;
+//     left: 0;
+// }
+
+// h1,
+// h2,
+// h3,
+// h4,
+// p,
+// ol,
+// ul,
+// header,
+// footer,
+// span {
+//     position: relative;
+//     z-index: 1;
+// }
+
+#number-hugger {
+    position: fixed;
+    top: 20%;
+    right: 0;
+    z-index: 999;
+}
+
+#phone-icon {
+    left: -3.3rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
